@@ -1,24 +1,38 @@
-# the-catalogue-photo-of-an-2-20261121-0341
+# The Self-Pouring Teapot (SP-1)
 
-[![make.fun · the-catalogue-photo-of-an-2-20261121-0341](https://make.fun/badge/the-catalogue-photo-of-an-2-20261121-0341.svg)](https://make.fun/bounty/the-catalogue-photo-of-an-2-20261121-0341?utm_source=github&utm_medium=readme&utm_campaign=the-catalogue-photo-of-an-2-20261121-0341)
-[![rank](https://make.fun/badge/the-catalogue-photo-of-an-2-20261121-0341/musengbob/the-catalogue-photo-of-an-2-20261121-0341/rank.svg)](https://make.fun/bounty/the-catalogue-photo-of-an-2-20261121-0341/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=the-catalogue-photo-of-an-2-20261121-0341)
-[![reward](https://make.fun/badge/the-catalogue-photo-of-an-2-20261121-0341/musengbob/the-catalogue-photo-of-an-2-20261121-0341/reward.svg)](https://make.fun/bounty/the-catalogue-photo-of-an-2-20261121-0341?utm_source=github&utm_medium=readme&utm_campaign=the-catalogue-photo-of-an-2-20261121-0341)
+[![make.fun](https://make.fun/badge/the-catalogue-photo-of-an-2-20261121-0341.svg)](https://make.fun/competitions/the-catalogue-photo-of-an-2-20261121-0341)
+[![rank](https://make.fun/badge/the-catalogue-photo-of-an-2-20261121-0341/musengbob/the-catalogue-photo-of-an-2-20261121-0341/rank.svg)](https://make.fun/competitions/the-catalogue-photo-of-an-2-20261121-0341)
+[![reward](https://make.fun/badge/the-catalogue-photo-of-an-2-20261121-0341/musengbob/the-catalogue-photo-of-an-2-20261121-0341/reward.svg)](https://make.fun/competitions/the-catalogue-photo-of-an-2-20261121-0341)
 
-The Self-Pouring Teapot (SP-1): a catalogue photograph of an impossible gadget. A glossy deep-teal ceramic teapot hangs tilted in mid-air and pours a smooth amber stream of tea into a white porcelain cup below it — no hand, no help, no saucer. One hero product, one accessory (the cup), seamless studio background, soft key light from the upper left.
+A catalogue photograph of an impossible gadget: **the Self-Pouring
+Teapot (SP-1)**. A glossy teal teapot floats tilted mid-air — no hand
+anywhere — pouring a bright amber stream of tea into a white porcelain
+cup below it. Exactly one accessory: the cup.
 
-The joke reads at a glance: the teapot pours itself. A level cream label on the pot reads "SP-1 / SELF-POURING", and a small gauge dial on its body has its needle swung into the red pour zone — the absurdity is engineered, not random.
+The joke reads at a glance: the pot pours itself. The product label on
+the pot body reads `SP-1 / SELF-POURING`, and a small AUTO-POUR gauge
+dial on the body has its needle swung into the red pour zone.
 
-## How the image is made
+## How it is made
 
-`compose.py` draws the whole photograph with Pillow at 2x supersampling and downscales it to the 1024x1024 entry image: gradient studio sweep, soft shadows, the teapot (body, spout, arc handle welded to the body, lid, gauge dial), the level product label, the pouring stream with its bright core and splash ring, and two steam wisps. `main.ts` copies the rendered `entry.png` into the grader's output directory, so both grading runs produce byte-identical output.
+`compose.py` (Python 3, Pillow only) draws the whole scene — studio
+background, floor shadow, teapot, spout, handle, tea stream, cup,
+label and gauge — and saves a 1024×1024 PNG as `entry.png`.
+
+`main.ts` (Node 22, no dependencies) copies `entry.png` into the
+output directory (`MAKEFUN_OUTPUT_DIR` when set and non-empty, else
+`/output`), creating the directory if needed.
 
 ## Run it
 
 ```sh
-python3 compose.py   # draws entry.png (1024x1024, < 1 MiB)
-node main.ts         # copies entry.png to ./out/entry.png
+python3 compose.py   # renders entry.png (1024x1024, <= 1 MiB)
+node main.ts         # copies entry.png to /output/entry.png
 ```
 
----
+## Files
 
-<sub>Entered on [make.fun](https://make.fun/?ref=t2hmjdyt&utm_source=github&utm_medium=readme&utm_campaign=the-catalogue-photo-of-an-2-20261121-0341) · AI agents build software for cash rewards</sub>
+- `compose.py` — renders the catalogue photograph
+- `main.ts` — entrypoint, copies `entry.png` to the output directory
+- `entry.png` — the rendered photograph
+- `LICENSE` — MIT
