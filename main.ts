@@ -1,12 +1,21 @@
-import { copyFileSync, mkdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// The entry image is drawn by compose.py and shipped as entry.png.
-// This program only copies it into the output directory, so both
-// grading runs produce byte-identical output.
-const here = dirname(fileURLToPath(import.meta.url));
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? join(here, "out");
+// Entry point: the catalogue photo is rendered by compose.py and shipped
+// as entry.png next to this file. This program only places that image into
+// the grader's output directory, so every grading run emits byte-identical
+// output. It refuses to run if the rendered image is missing, rather than
+// silently producing an empty entry.
+const repoRoot = dirname(fileURLToPath(import.meta.url));
+const sourceImage = join(repoRoot, "entry.png");
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? join(repoRoot, "out");
 
-mkdirSync(outDir, { recursive: true });
-copyFileSync(join(here, "entry.png"), join(outDir, "entry.png"));
+if (!existsSync(sourceImage)) {
+  throw new Error(
+    `entry.png not found in ${repoRoot} -- run "python3 compose.py" first`,
+  );
+}
+
+mkdirSync(outputDir, { recursive: true });
+copyFileSync(sourceImage, join(outputDir, "entry.png"));
